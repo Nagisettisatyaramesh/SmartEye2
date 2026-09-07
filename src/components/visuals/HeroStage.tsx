@@ -2,19 +2,22 @@ import { type MouseEvent } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ListChecks, ShieldAlert, Compass, FlaskConical, GitBranch, FileStack, BadgeCheck } from 'lucide-react'
 
-const chips = [
-  { icon: ListChecks, label: 'Requirements', top: '4%', left: '2%', depth: 0.7, delay: 0.5 },
-  { icon: ShieldAlert, label: 'Risk', top: '10%', left: '68%', depth: 1, delay: 0.65 },
-  { icon: Compass, label: 'Design', top: '58%', left: '78%', depth: 0.6, delay: 0.8 },
-  { icon: FlaskConical, label: 'Testing', top: '72%', left: '6%', depth: 0.8, delay: 0.95 },
-  { icon: GitBranch, label: 'Traceability', top: '38%', left: '84%', depth: 0.5, delay: 1.1 },
-  { icon: FileStack, label: 'Documents', top: '-2%', left: '38%', depth: 0.9, delay: 1.25 },
-  { icon: BadgeCheck, label: 'Compliance', top: '80%', left: '42%', depth: 0.65, delay: 1.4 },
-]
+// top/left are the chip box's own top-left corner, as a percentage of the stage.
+// Each chip is roughly 22% wide and 8% tall at this stage size, so the connecting
+// line below is aimed at (left + halfWidth, top + halfHeight) — the chip's visual
+// center — computed from these same numbers rather than a separate hand-typed list.
+const CHIP_HALF_WIDTH = 11
+const CHIP_HALF_HEIGHT = 4
 
-const lineTargets = [
-  [50, 8], [72, 20], [82, 62], [30, 78], [88, 44], [46, 4], [48, 84],
-] as const
+const chips = [
+  { icon: ListChecks, label: 'Requirements', top: 4, left: 2, depth: 0.7, delay: 0.5 },
+  { icon: ShieldAlert, label: 'Risk', top: 10, left: 68, depth: 1, delay: 0.65 },
+  { icon: Compass, label: 'Design', top: 58, left: 78, depth: 0.6, delay: 0.8 },
+  { icon: FlaskConical, label: 'Testing', top: 72, left: 6, depth: 0.8, delay: 0.95 },
+  { icon: GitBranch, label: 'Traceability', top: 38, left: 84, depth: 0.5, delay: 1.1 },
+  { icon: FileStack, label: 'Documents', top: -2, left: 38, depth: 0.9, delay: 1.25 },
+  { icon: BadgeCheck, label: 'Compliance', top: 80, left: 42, depth: 0.65, delay: 1.4 },
+]
 
 export function HeroStage() {
   const mx = useMotionValue(0)
@@ -42,13 +45,13 @@ export function HeroStage() {
       <motion.div style={{ rotateX, rotateY }} className="relative h-full w-full [transform-style:preserve-3d]">
         {/* connecting lines */}
         <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {lineTargets.map(([x, y], i) => (
+          {chips.map((chip, i) => (
             <motion.line
-              key={i}
+              key={chip.label}
               x1="50"
               y1="50"
-              x2={x}
-              y2={y}
+              x2={chip.left + CHIP_HALF_WIDTH}
+              y2={chip.top + CHIP_HALF_HEIGHT}
               stroke="url(#hero-line-gradient)"
               strokeWidth="0.25"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -110,7 +113,7 @@ export function HeroStage() {
 
         {/* orbiting module chips */}
         {chips.map((chip, i) => (
-          <div key={chip.label} className="absolute" style={{ top: chip.top, left: chip.left }}>
+          <div key={chip.label} className="absolute" style={{ top: `${chip.top}%`, left: `${chip.left}%` }}>
             <motion.div
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}

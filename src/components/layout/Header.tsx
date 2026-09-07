@@ -38,8 +38,11 @@ export function Header() {
           <div
             className={clsx(
               'flex items-center justify-between rounded-full px-5 transition-all duration-500 sm:px-6',
-              scrolled ? 'glass h-14' : 'h-14 border border-transparent bg-transparent',
+              scrolled
+                ? 'h-14 border border-white/10 shadow-elevated backdrop-blur-xl'
+                : 'h-14 border border-transparent bg-transparent',
             )}
+            style={scrolled ? { backgroundColor: 'rgba(4, 6, 10, 0.94)' } : undefined}
           >
             <Logo light />
 
