@@ -3,7 +3,7 @@ import { SEO } from '@/components/ui/SEO'
 import { Container } from '@/components/ui/Container'
 import { RevealText } from '@/components/ui/RevealText'
 import { AmbientField } from '@/components/ui/AmbientField'
-import { DemoForm } from '@/components/sections/DemoForm'
+import { ContactForm } from '@/components/sections/ContactForm'
 
 const contactDetails = [
   { icon: Mail, label: 'Email Us', value: 'info@scube-technologies.com', href: 'mailto:info@scube-technologies.com' },
@@ -69,10 +69,10 @@ export function ContactPage() {
           </div>
 
           <div className="glass rounded-3xl p-8">
-            <h2 className="font-display text-xl font-bold text-white">Request a Demo</h2>
-            <p className="mt-2 text-sm text-white/50">Tell us a little about your requirements and we'll be in touch.</p>
+            <h2 className="font-display text-xl font-bold text-white">Send us a message</h2>
+            <p className="mt-2 text-sm text-white/50">Tell us how we can help and we'll get back to you.</p>
             <div className="mt-6">
-              <DemoForm compact />
+              <ContactForm />
             </div>
           </div>
         </Container>
